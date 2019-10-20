@@ -18,6 +18,7 @@ int main()
 	{
 	case 0:Task_1(); break;
 	case 1:Task_13(); break;
+	case 2:Task_13_alternative(); break;
 		system("pause");
 		return 0;
 	}
@@ -29,11 +30,13 @@ int menu() {
 	int code;
 	do {
 		system("cls");
-		key = (key + 2) % 2;
+		key = (key + 3) % 3;
 		if (key == 0) cout << "-> Task_1" << endl;
 		else  cout << "   Task_1" << endl;
 		if (key == 1) cout << "-> Task_13" << endl;
 		else  cout << "   Task_13" << endl;
+		if (key == 2) cout << "-> Task_13_alt" << endl;
+		else  cout << "   Task_13_alt" << endl;
 		code = _getch();
 		if (code == 224)
 		{

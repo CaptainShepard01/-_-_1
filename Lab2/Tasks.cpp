@@ -136,17 +136,11 @@ a.push_back (down[i]);
 struct point
 {
 	int x, y;
-	point() {}
-	point(int X, int Y)
-	{
-		x = X;
-		y = Y;
-	}
 };
 
 int OrientTriangl2(const point& p1, const point& p2, const point& p3)
 {
-	return p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y);
+	return (p1.x - p2.x)*(p3.y-p2.y)-(p3.x-p2.x)*(p1.y-p2.y);
 }
 
 bool isInside(const point& p1, const point& p, const point& p2)
@@ -219,10 +213,70 @@ int Task_13() {
 }
 
 
+void ConvexHullJarvisAlt(int n, const point mas[], point convex_hull[], int count[])
+{
+	// находим самую левую из самых нижних
+	int base = 0;
+	for (int i = 1; i < n; i++)
+	{
+		if (mas[i].y < mas[base].y)
+			base = i;
+		else
+			if (mas[i].y == mas[base].y &&
+				mas[i].x < mas[base].x)
+				base = i;
+	}
+	// эта точка точно входит в выпуклую оболочку
+	convex_hull[base] = mas[base];
+	count[base] = base;
 
+	int first = base;
+	int cur = base;
+	do
+	{
+		int next = (cur + 1) % n;
+		for (int i = 0; i < n; i++)
+		{
+			int sign = OrientTriangl2(mas[cur], mas[next], mas[i]);
+			// точка mas[i] находитс€ левее пр€мой ( mas[cur], mas[next] )
+			if (sign < 0) // обход выпуклой оболочки против часовой стрелки
+				next = i;
+			// точка лежит на пр€мой, образованной точками  mas[cur], mas[next]
+			else if (sign == 0)
+			{
+				// точка mas[i] находитс€ дальше, чем mas[next] от точки mas[cur]
+				if (isInside(mas[cur], mas[next], mas[i]))
+					next = i;
+			}
+		}
+		cur = next;
+		convex_hull[next] = mas[next];
+		count[next] = next;
+	} while (cur != first);
+}
 
 int Task_13_alternative()
 {
-
+	setlocale(LC_ALL, "Russian");
+	cout << "ƒано n точек на плоскости, построить их выпуклую оболочку.\n";
+	int n, i, j;
+	cout << "¬ведите n\n";
+	cin >> n;
+	point* convex_hull = new point[n];
+	point* Mass = new point[n];
+	int* Count = new int[n];
+	cout << "¬ведите координаты точек (x и y):\n";
+	for (int i = 0; i < n; i++) {
+		cout << i + 1 << " ------> ";
+		cin >> Mass[i].x >> Mass[i].y;
+	}
+	ConvexHullJarvisAlt(n, Mass, convex_hull, Count);
+	cout << "ѕор€док обхода точек:\n";
+	for (int i = 0; i < n; ++i) {
+		cout << i + 1 << " ------> " << Count[i] << endl;
+	}
+	delete[] Mass;
+	delete[] convex_hull;
+	delete[] Count;
 	return 0;
 }
