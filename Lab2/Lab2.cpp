@@ -3,6 +3,7 @@
 #include <cmath>
 #include <algorithm>
 #include <iomanip>
+#include <vector>
 #include <conio.h>
 #include "Header.h";
 using namespace std;

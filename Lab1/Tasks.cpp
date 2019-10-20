@@ -42,7 +42,7 @@ int Task_9()
 		return;
 	}
 
-	double ret = a * double(100000000000000000);
+	double ret = a * double(100000000000000000); 
 	long double res = ret / b;
 	long double res2 = res / 100000000000000000;
 

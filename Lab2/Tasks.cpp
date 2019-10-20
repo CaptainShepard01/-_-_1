@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <conio.h>
 #include "Header.h";
+#include <vector>;
 using namespace std;
 
 /*1)	Задаються три пари чисел, які задають трикутник на площині. Крім того,задається ще одна пара чисел, яка задає точку на площині. Визначити, чи лежить точка усередині трикутника, чи на одному з його ребер, чи зовні.*/
@@ -18,7 +19,7 @@ int NotTriangola(float x1, float y1, float x2, float y2, float x3, float y3)
 }
 
 float SquareOfTriangola(float x1, float y1, float x2, float y2, float x3, float y3) {
-	return (0,5 * (abs((x1-x2)*(y3-y2)-(x3-x2)*(y1-y2))));
+	return (0, 5 * (abs((x1 - x2) * (y3 - y2) - (x3 - x2) * (y1 - y2))));
 }
 
 int Task_1()
@@ -88,7 +89,7 @@ int Task_1()
 среди левых, и самую верхнюю среди правых). Понятно, что и A, и B обязательно попадут в выпуклую оболочку.
 Далее, проведём через них прямую AB, разделив множество всех точек на верхнее и нижнее подмножества S1 и S2
  (точки, лежащие на прямой, можно отнести к любому множеству - они всё равно не войдут в оболочку). Точки A и B отнесём к обоим множествам. Теперь построим для S1 верхнюю оболочку, а для S2 - нижнюю оболочку, и объединим их, получив ответ. Чтобы получить, скажем, верхнюю оболочку, нужно отсортировать все точки по абсциссе, затем пройтись по всем точкам, рассматривая на каждом шаге кроме самой точки две предыдущие точки, вошедшие в оболочку. Если текущая тройка точек образует не правый поворот (что легко проверить с помощью Ориентированной площади), то ближайшего соседа нужно удалить из оболочки. В конце концов, останутся только точки, входящие в выпуклую оболочку.
-Итак, алгоритм заключается в сортировке всех точек по абсциссе и двух (в худшем случае) обходах всех точек, 
+Итак, алгоритм заключается в сортировке всех точек по абсциссе и двух (в худшем случае) обходах всех точек,
 т.е. требуемая асимптотика O (N log N) достигнута.
 
 Реализация
@@ -132,7 +133,95 @@ for (size_t i=down.size()-2; i>0; --i)
 a.push_back (down[i]);
 }*/
 
-int Task_13() 
+struct point
+{
+	int x, y;
+	point() {}
+	point(int X, int Y)
+	{
+		x = X;
+		y = Y;
+	}
+};
+
+int OrientTriangl2(const point& p1, const point& p2, const point& p3)
+{
+	return p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y);
+}
+
+bool isInside(const point& p1, const point& p, const point& p2)
+{
+	return (p1.x <= p.x && p.x <= p2.x &&
+		p1.y <= p.y && p.y <= p2.y);
+}
+
+void ConvexHullJarvis(const vector<point>& mas, vector<int>& convex_hull)
+{
+	// находим самую левую из самых нижних
+	int base = 0;
+	int n = mas.size();
+	for (int i = 1; i < n; i++)
+	{
+		if (mas[i].y < mas[base].y)
+			base = i;
+		else
+			if (mas[i].y == mas[base].y &&
+				mas[i].x < mas[base].x)
+				base = i;
+	}
+	// эта точка точно входит в выпуклую оболочку
+	convex_hull.push_back(base);
+
+	int first = base;
+	int cur = base;
+	do
+	{
+		int next = (cur + 1) % n;
+		for (int i = 0; i < n; i++)
+		{
+			int sign = OrientTriangl2(mas[cur], mas[next], mas[i]);
+			// точка mas[i] находится левее прямой ( mas[cur], mas[next] )
+			if (sign < 0) // обход выпуклой оболочки против часовой стрелки
+				next = i;
+			// точка лежит на прямой, образованной точками  mas[cur], mas[next]
+			else if (sign == 0)
+			{
+				// точка mas[i] находится дальше, чем mas[next] от точки mas[cur]
+				if (isInside(mas[cur], mas[next], mas[i]))
+					next = i;
+			}
+		}
+		cur = next;
+		convex_hull.push_back(next);
+	} while (cur != first);
+}
+
+int Task_13() {
+	setlocale(LC_ALL, "Russian");
+	cout << "Дано n точек на плоскости, построить их выпуклую оболочку.\n";
+	int n;
+	cout << "Введите n\n";
+	vector<point> mas;
+	vector<int> convex_hull;
+	cin >> n;
+	mas.resize(n);
+	cout << "Введите координаты точек (x и y):\n";
+	for (int i = 0; i < n; i++) {
+		cout << i + 1 << " ------> ";
+		cin >> mas[i].x >> mas[i].y;
+	}
+	ConvexHullJarvis(mas, convex_hull);
+	cout << "Порядок обхода точек:\n";
+	for (int i = 0; i < n; ++i) {
+		cout << i + 1 << " ------> " << convex_hull[i] << endl;
+	}
+	return 0;
+}
+
+
+
+
+int Task_13_alternative()
 {
 
 	return 0;
