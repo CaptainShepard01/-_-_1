@@ -8,3 +8,5 @@
 using namespace std;
 
 int Task_9();
+int Task_1();
+bool isPrime(int n);

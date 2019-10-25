@@ -251,7 +251,7 @@ void ConvexHullJarvisAlt(int n, const point mas[], point convex_hull[], int coun
 		}
 		cur = next;
 		convex_hull[next] = mas[next];
-		count[next] = next;
+		count[cur] = cur;
 	} while (cur != first);
 }
 
