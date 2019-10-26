@@ -7,7 +7,7 @@
 #include "Header.h";
 using namespace std;
 
-/*1)	Вводиться N. Розкласти число N! на прості множники. Наприклад, користувач вводить 10, програма виводить {2, 8}, {3, 4}, {5, 2}, {7, 1}.*/
+/*1)	There is positive integer N. Devide N on the prime deviders.*/
 
 bool isPrime(int n)
 {
@@ -27,6 +27,7 @@ bool isPrime(int n)
 
 int Task_1()
 {
+	cout << "There is positive integer N. Devide N on the prime deviders.\n";
 	int n;
 	cout << "Enter N: ";
 	cin >> n;
@@ -62,24 +63,24 @@ int Task_1()
 	return 0;
 }
 
-/*9)	Дано два натуральних числа a та b. Вивести на екран період дробу a/b.*/
+/*9)	There are 2 natural numbers a and b. Show the period of a/b.*/
 
 int Task_9()
 {
-	cout << " Есть два натуральных числа a та b. Вывести на экран период дроби a/b. " << endl;
+	cout << " There are 2 natural numbers a and b. Show the period of a/b. " << endl;
 	long double a = 0, b = 0, temp_res = 0;
 
 	int mb_period = 0, count = 0, temp = 1, real_period = 0;
 
-	cout << "Ведите натуральное число A: " << endl;
+	cout << "Enter natural A: " << endl;
 	cin >> a;
 
-	cout << "Ведите натуральное число B: " << endl;
+	cout << "Enter natural B: " << endl;
 	cin >> b;
 
 	if (a - (int)a != 0 || b - (int)b != 0)
 	{
-		cout << "Некоректное введение!" << endl;
+		cout << "Incorrect enter" << endl;
 		return;
 	}
 
@@ -127,5 +128,5 @@ int Task_9()
 		if (real_period == 2) break;
 	}
 
-	cout << "Перiод дробу a/b = " << mb_period << endl;
+	cout << "Period of a/b = " << mb_period << endl;
 }
