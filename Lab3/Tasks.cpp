@@ -41,6 +41,14 @@ int Task_1()
 	cin >> ax.up;
 	cout << "b = ";
 	cin >> ax.down;
+	if (ax.down == 0) {
+		cout << "There is no deviding by 0 in this task.\n";
+		return 0;
+	}
+	if (ax.up == 0) {
+		cout << 0 << endl;
+		return 0;
+	}
 	cout << "Enter epsylon:\n";
 	cin >> eps;
 	int a;
