@@ -10,18 +10,23 @@ using namespace std;
 
 /*1) Turn into chain fraction real number from user.*/
 
-int ChainFract(float x, float eps) {
-	/*while ((1 / x - int(1/x)) > eps) {
-		int a = int(1 / x);
-		x = 1 / x - a;
-		cout << a << ", ";
-	}*/
-	while (x > eps && x!=0) {
-		cout << int(1/x) << ", ";
-		x = (1 / x) - int(1/x);
-		ChainFract(x, eps);
+struct Fraction {
+	int up;
+	int down;
+};
+
+void ChainFract(Fraction a, float eps) {
+	for (int i = 0; i < 1000 && (a.up / a.down) >= eps;++i) {
+		int temp = a.up;
+		a.up = a.down;
+		a.down = temp;
+		int b = int(a.up / a.down);
+		if (a.up % a.down == 0) cout << b << endl;
+		else cout << b << ", ";
+		if (a.up % a.down == 0)return;
+		a.up -= (b * a.down);		
 	}
-	return 0;
+	return;
 }
 
 
@@ -29,19 +34,21 @@ int ChainFract(float x, float eps) {
 int Task_1()
 {
 	cout << "Turn into chain fraction real number from user.\n";
-	float c, b, x;
-	cout << "Enter fraction (c/b):\n";
-	cout << "c = ";
-	cin >> c;
+	Fraction ax;
+	float eps;
+	cout << "Enter fraction (a/b):\n";
+	cout << "a = ";
+	cin >> ax.up;
 	cout << "b = ";
-	cin >> b;
-	x = c / b;
-	int a, k;
-	float x0;
-	a = int(x);
-	x = x - a;
+	cin >> ax.down;
+	cout << "Enter epsylon:\n";
+	cin >> eps;
+	int a;
+	cout << "Fractions:\n"; 
+	a = int(ax.up / ax.down);
+	ax.up -= (int(ax.up / ax.down) * ax.down);
 	cout << a << "; ";
-	ChainFract(x, 0.25);
+	ChainFract(ax, eps);
 	return 0;
 }
 

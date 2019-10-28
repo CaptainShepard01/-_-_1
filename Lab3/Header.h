@@ -8,7 +8,9 @@
 #include <vector>
 using namespace std;
 
+struct Fraction;
+
 int Task_1();
-int ChainFract(float, float);
+void ChainFract(Fraction, float);
 
 int Task_15();
