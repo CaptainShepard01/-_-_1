@@ -81,7 +81,7 @@ int Task_9()
 	if (a - (int)a != 0 || b - (int)b != 0)
 	{
 		cout << "Incorrect enter" << endl;
-		return;
+		return 0;
 	}
 
 	double ret = a * double(100000000000000000);
@@ -129,4 +129,5 @@ int Task_9()
 	}
 
 	cout << "Period of a/b = " << mb_period << endl;
+	return 0;
 }
