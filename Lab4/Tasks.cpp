@@ -52,7 +52,7 @@ bool IsAcute(int a, int b, int c) {
 	return false;
 }
 
-struct Triangola {int a, b, c; };
+struct Triangola { int a, b, c; };
 
 int multiplication(int a, int b, int c) {
 	return a * b * c;
@@ -92,7 +92,17 @@ void Triangola_Creator()
 	for (int i = 0; i < n; ++i) {
 		cin >> mas[i];
 	}
-	Triangola* temp = new Triangola[n*(n-2)*(n-3)];
+	for (int i = 0; i < n; ++i) {
+		for (int j = i; j < n; ++j) {
+			if (mas[j] < mas[i]) {
+				int temp = mas[i];
+				mas[i] = mas[j];
+				mas[j] = temp;
+			}
+		}
+	}
+
+	Triangola* temp = new Triangola[n * (n - 2) * (n - 3)];
 	int count = 0;
 	for (int i = 0; i < n; ++i) {
 		for (int j = i + 1; j < n; ++j) {
@@ -106,12 +116,15 @@ void Triangola_Creator()
 			}
 		}
 	}
+
+	//////////////сортировка длин в треугольниках
+
 	for (int i = 0; i < count + 1; ++i) {
-		for (int j = i; j < count + 1; ++j) {
-			if (IsNotRepeated(temp[i], temp, j, count+1)) {
-				cout << temp[j].a << ' ' << temp[j].b << ' ' << temp[j].c << endl;
-			}
+
+		if (IsNotRepeated(temp[i], temp, i, count + 1)) {
+			cout << temp[i].a << ' ' << temp[i].b << ' ' << temp[i].c << endl;
 		}
+
 	}
 	cout << endl;
 	delete[] mas;
