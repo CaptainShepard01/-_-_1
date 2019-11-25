@@ -117,15 +117,19 @@ void Triangola_Creator()
 		}
 	}
 
+	for (int i = 0; i < count; ++i) {
+		cout << temp[i].a << ' ' << temp[i].b << ' ' << temp[i].c << endl;
+	}
+
 	//////////////сортировка длин в треугольниках
 
-	for (int i = 0; i < count + 1; ++i) {
+	/*for (int i = 0; i < count; ++i) {
 
-		if (IsNotRepeated(temp[i], temp, i, count + 1)) {
+		if (IsNotRepeated(temp[i], temp, i, count)) {
 			cout << temp[i].a << ' ' << temp[i].b << ' ' << temp[i].c << endl;
 		}
 
-	}
+	}*/
 	cout << endl;
 	delete[] mas;
 	delete[] temp;
