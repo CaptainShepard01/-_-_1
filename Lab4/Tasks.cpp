@@ -67,18 +67,9 @@ bool IsTriangola(int a, int b, int c) {
 	return true;
 }
 
-bool IsNotRepeated(Triangola x, int i,  Triangola* y, int l, int z) {
-	bool flag;
-	for (int m = l; m < i; ++m) {
-		if ((multiplication(x.a, x.b, x.c) == multiplication(y[m].a, y[m].b, y[m].c)) && (sum(x.a, x.b, x.c) == sum(y[m].a, y[m].b, y[m].c))) {
-			flag = false;
-			break;
-		}
-		else {
-			flag = true;
-		}
-	}
-	for (int m = i + 1; i < z; ++m) {
+bool IsNotRepeated(Triangola x, Triangola* y, int l, int z) {
+	bool flag = false;
+	for (int m = l+1; m < z; ++m) {
 		if ((multiplication(x.a, x.b, x.c) == multiplication(y[m].a, y[m].b, y[m].c)) && (sum(x.a, x.b, x.c) == sum(y[m].a, y[m].b, y[m].c))) {
 			flag = false;
 			break;
@@ -126,12 +117,7 @@ void Triangola_Creator()
 		}
 	}
 
-	/*for (int i = 0; i < count; ++i) {
-		cout << temp[i].a << ' ' << temp[i].b << ' ' << temp[i].c << endl;
-	}*/
-
-	//////////////сортировка длин в треугольниках
-
+	cout << "\nTriangolas which are with such properties: \n\n";
 	for (int i = 0; i < count; ++i) {
 
 		if (IsNotRepeated(temp[i], temp, i, count)) {
