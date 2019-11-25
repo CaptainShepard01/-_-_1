@@ -117,6 +117,12 @@ void Triangola_Creator()
 		}
 	}
 
+	/*cout << endl;
+	for (int i = 0; i < count; ++i) {
+		cout << temp[i].a << ' ' << temp[i].b << ' ' << temp[i].c << endl;
+	}
+	cout << endl;*/
+
 	cout << "\nTriangolas which are with such properties: \n\n";
 	for (int i = 0; i < count; ++i) {
 
