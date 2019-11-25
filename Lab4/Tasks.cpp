@@ -102,7 +102,7 @@ void Triangola_Creator()
 		}
 	}
 
-	Triangola* temp = new Triangola[n * (n - 2) * (n - 3)];
+	Triangola* temp = new Triangola[(n * (n - 2) * (n - 1))/6];
 	int count = 0;
 	for (int i = 0; i < n; ++i) {
 		for (int j = i + 1; j < n; ++j) {
