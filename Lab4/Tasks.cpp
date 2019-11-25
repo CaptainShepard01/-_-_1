@@ -86,11 +86,15 @@ void Triangola_Creator()
 	cout << "There are N natural numbers, this piece of programme should show us all such trios of numbers without repeats, which are sides of acute-angled triangolas.\n";
 	int n;
 	cout << "Enter number of natural numbers: ";
-	cin >> n;
+	do {
+		cin >> n;
+	} while (n <= 0);
 	int* mas = new int[n];
 	cout << "Enter numbers: \n";
 	for (int i = 0; i < n; ++i) {
-		cin >> mas[i];
+		do {
+			cin >> mas[i];
+		} while (mas[i] <= 0);
 	}
 	for (int i = 0; i < n; ++i) {
 		for (int j = i; j < n; ++j) {
