@@ -68,9 +68,9 @@ bool IsTriangola(int a, int b, int c) {
 }
 
 bool IsNotRepeated(Triangola x, Triangola* y, int l, int z) {
-	bool flag;
-	for (int m = l; m < z; ++m) {
-		if ((x.a * x.b * x.c == y[m].a * y[m].b * y[m].c) && (x.a + x.b + x.c == y[m].a + y[m].b + y[m].c)) {
+	bool flag = false;
+	for (int m = l+1; m < z; ++m) {
+		if ((multiplication(x.a, x.b, x.c) == multiplication(y[m].a, y[m].b, y[m].c)) && (sum(x.a, x.b, x.c) == sum(y[m].a, y[m].b, y[m].c))) {
 			flag = false;
 			break;
 		}
@@ -86,11 +86,15 @@ void Triangola_Creator()
 	cout << "There are N natural numbers, this piece of programme should show us all such trios of numbers without repeats, which are sides of acute-angled triangolas.\n";
 	int n;
 	cout << "Enter number of natural numbers: ";
-	cin >> n;
+	do {
+		cin >> n;
+	} while (n <= 0);
 	int* mas = new int[n];
 	cout << "Enter numbers: \n";
 	for (int i = 0; i < n; ++i) {
-		cin >> mas[i];
+		do {
+			cin >> mas[i];
+		} while (mas[i] <= 0);
 	}
 	for (int i = 0; i < n; ++i) {
 		for (int j = i; j < n; ++j) {
@@ -102,7 +106,7 @@ void Triangola_Creator()
 		}
 	}
 
-	Triangola* temp = new Triangola[n * (n - 2) * (n - 3)];
+	Triangola* temp = new Triangola[(n * (n - 2) * (n - 1))/6];
 	int count = 0;
 	for (int i = 0; i < n; ++i) {
 		for (int j = i + 1; j < n; ++j) {
@@ -117,11 +121,16 @@ void Triangola_Creator()
 		}
 	}
 
-	//////////////сортировка длин в треугольниках
+	/*cout << endl;
+	for (int i = 0; i < count; ++i) {
+		cout << temp[i].a << ' ' << temp[i].b << ' ' << temp[i].c << endl;
+	}
+	cout << endl;*/
 
-	for (int i = 0; i < count + 1; ++i) {
+	cout << "\nTriangolas which are with such properties: \n\n";
+	for (int i = 0; i < count; ++i) {
 
-		if (IsNotRepeated(temp[i], temp, i, count + 1)) {
+		if (IsNotRepeated(temp[i], temp, i, count)) {
 			cout << temp[i].a << ' ' << temp[i].b << ' ' << temp[i].c << endl;
 		}
 
