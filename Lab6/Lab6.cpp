@@ -108,9 +108,9 @@ void Task_1()
 	in.close();
 }
 
-int leftrotate(int x, int c)
+int leftrotate(unsigned int x, int c)
 {
-	return x << c || x >> (32 - c);
+	return (x << c) | (x >> (32 - c));
 }
 
 void md5(char* p, int n) {
@@ -204,7 +204,7 @@ void md5(char* p, int n) {
 				g = (5 * i + 1) % 16;
 			}
 			else if (i < 48) {
-				f = (((~B & C) | (~C & B)) & ~D) | (~((~B & C) || (~C & B)) & D);
+				f = (((~B & C) | (~C & B)) & ~D) | (~((~B & C) | (~C & B)) & D);
 				g = (3 * i + 5) % 16;
 			}
 			else {
