@@ -1,4 +1,5 @@
-﻿#include <iostream>
+﻿#define CRT_NO_SECURE_WARNINGS_
+#include <iostream>
 #include <cmath>
 #include <algorithm>
 #include <iomanip>
@@ -10,11 +11,27 @@
 
 using namespace std;
 
-bool SmlrWrds(char** s, char a, int n, int an)
+bool SmlrWrds(char** s, char* x, int k, int l)
 {
-	for (int i = 0; i < n; ++i) {
-		
+	bool temp = false;
+	for (int i = 0; i < k; ++i) {
+		if (!strcmp(s[i], x)) {
+			temp = true;
+			break;
+		}
+		else if (strcmp(s[i], x) != 0) temp = false;
 	}
+	/*if (temp == false) {
+		for (int i = k + 1; i < l; ++i) {
+			if (!strcmp(s[i], x)) {
+				temp = true;
+				break;
+			}
+			else if (strcmp(s[i], x) != 0) temp = false;
+		}
+	}*/
+	if (temp == 1)return true;
+	else return false;
 }
 
 
@@ -31,10 +48,10 @@ void Task_1()
 		for (int i = 0; i < 256; ++i) {
 			words[i] = new char[256];
 		}
-		char** words1 = new char* [256];
+		/*char** words1 = new char* [256];
 		for (int i = 0; i < 256; ++i) {
 			words1[i] = new char[256];
-		}
+		}*/
 		int j = 0;
 		for (int i = 0; text[i - 1] != '\0'; i++)
 		{
@@ -57,7 +74,7 @@ void Task_1()
 				temp = '\0';
 			}
 		}
-		for (int i = 0; text[i - 1] != '\0'; i++)
+		/*for (int i = 0; text[i - 1] != '\0'; i++)
 		{
 			if (temp == '\0' && text[i] != ' ')
 			{
@@ -77,7 +94,7 @@ void Task_1()
 				}
 				temp = '\0';
 			}
-		}
+		}*/
 		cout << endl;
 		for (int i = 0; i < iterI; i++)
 		{
@@ -103,10 +120,7 @@ void md5(char* p, int n) {
 	unsigned int b0 = 0xefcdab89;   //B
 	unsigned int c0 = 0x98badcfe;   //C
 	unsigned int d0 = 0x10325476;   //D
-	string ss; //p += 1;
-	//cout <<p<<"k"<<sizeof(p);
-	//int a = 6;
-	//int nn = 9;//bool k;
+	string ss; 
 	unsigned int** u = new unsigned int* [ceil((double)n / 64) + 1];
 	for (int i = 0; i < ceil((double)n / 64) + 1; i++)
 		u[i] = new unsigned int[16];
@@ -118,9 +132,6 @@ void md5(char* p, int n) {
 
 		for (int i = 64 * j + 3; i < 64 * j + 64; i += 4) {
 			int y = 0;
-			//if (i >= n) {
-				//	break;
-				//}
 			for (int g = i + 4; g > i; g--) {
 
 				y *= 256;
@@ -132,23 +143,17 @@ void md5(char* p, int n) {
 		cout << endl;
 	}
 	int tick = 0, ttick = 0;
-	//for (j = 0; j < ceil((double)n / 64 ); j++) {
 
 	for (int i = 64 * j + 3; i < 64 * j + 64; i += 4) {
 		int y = 0;
-		//if (i >= n) {
-		//break;
-	//}
 		tick = 0;
 		for (int g = i; g > i - 4; g--) {
 
 			y *= 256;
 			if (g >= n) {
-				//	cout << tick << 'j';
 				tick = g - i + 3;
 			}
 			else y += p[g];
-			//cout << g << ' '<< y << endl;
 		}
 		if (tick > 0) {
 
@@ -163,13 +168,11 @@ void md5(char* p, int n) {
 		cout << u[j][(i - 64 * j) / 4] << ' ';
 	}
 	cout << endl;
-	//}
-		//cout << ttick;
+
 
 	if (ttick < 14) {
 		u[j][14] = n / pow(2, 32);
 		u[j][15] = n % ((int)pow(2, 32));
-		//cout << u[j][15];
 	}
 	else {
 		jui++;
@@ -184,60 +187,9 @@ void md5(char* p, int n) {
 	////
 	int** uu = new int* [jui];
 	int r;
-	/*for (int i = 0; i < jui; i++) {
-		uu[i] = new int[16];
-		for (int j = 0; j < 16; j++) {
-			r = 0x0;
-			for (int g = 32 * (j); g < 32*(j +1); g++) {
-				r *= 2;
-				r += u[i][g];
-			} ///// divide into groups 4 bit each zen skleit
-			switch (r) {
-			case 1:
-				uu[i][j] = 0x1;
-				break;case 2:
-				uu[i][j] = 0x2;
-				break;case 3:
-				uu[i][j] = 0x3;
-				break;case 4:
-				uu[i][j] = 0x4;
-				break;case 5:
-				uu[i][j] = 0x5;
-				break;case 6:
-				uu[i][j] = 0x6;
-				break;case 7:
-				uu[i][j] = 0x7;
-				break;case 8:
-				uu[i][j] = 0x8;
-				break;case 9:
-				uu[i][j] = 0x9;
-				break;case 10:
-				uu[i][j] = 0xa;
-				break;case 11:
-				uu[i][j] = 0xb;
-				break;case 12:
-				uu[i][j] = 0xc;
-				break;case 13:
-				uu[i][j] = 0xd;
-				break;case 14:
-				uu[i][j] = 0xe;
-				break;case 15:
-				uu[i][j] = 0xf;
-				break;
-			}
-			//
-		}
-	}
-	*/
-	//cout << u[j] << endl;
 	int A, B, C, D, f, g;
 	for (int j = 0; j < jui; j++) {
-		//int m[16];
-		//for (int i = 0; i < 16; i++) {
-			//for (int ii = 32 * i; ii < 32 * i + 32; ii++) {
-			//	m[i][ii % 32] = u[j][ii];
-			//}
-		//}
+
 		A = a0;
 		B = b0;
 		C = c0;
@@ -270,18 +222,8 @@ void md5(char* p, int n) {
 		c0 = c0 + C;
 		d0 = d0 + D;
 	}
-	//bitset<8> o, b, c;`
-	//o[0] = b[0] + c[0];
 	cout << endl << a0 << ' ' << b0 << ' ' << c0 << ' ' << d0 << endl;
 }
-
-//bitset<8> o, b, c;`
-//o[0] = b[0] + c[0];
-
-//u = 256 * p[0] +p[1];
-//cout << u;
-
-
 
 
 //////////////////
